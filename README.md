@@ -101,3 +101,206 @@ HashMap和Hashtable区别，原理
              表长度 – 1），也等价取膜，但更加高效，取得的位置更加分散，偶数，奇数保证了都
              会分散到。前者就不能保证
 </pre>
+
+<pre>
+字符编码：
+      1、常用的字符编码
+      2、如何解决中文乱码问题
+</pre>
+
+<pre>
+算法
+
+     1、排序都有哪几种方法？
+
+     2、会写常用的排序算法，如快排，归并等。
+
+     3、各种排序算法的时间复杂度和稳定性5、和广度优先搜索
+
+     6、最小生成树
+
+     7、常见Hash算法，哈希的原理和代价
+
+     8、全排列、贪心算法、KMP算法、hash算法
+
+     9、一致性Hash算法
+</pre>
+
+<pre>
+Tomcat的session处理，如果让你实现一个tomcatserver，如何实现session机制
+</pre>
+
+<pre>
+反射讲一讲，主要是概念,都在哪需要反射机制，反射的性能，如何优化
+</pre>
+
+<pre>
+sendRedirect, foward区别
+</pre>
+
+<pre>
+Servlet的生命周期
+</pre>
+
+<pre>
+JDK源码里面都有些什么让你印象深刻的设计模式使用，举例看看？ 
+</pre>
+
+<pre>
+你能列举一个使用了Visitor/Decorator模式的开源项目/库吗？
+</pre>
+
+<pre>
+你在设计一个工厂的包的时候会遵循哪些原则？
+</pre>
+
+<pre>
+你能举例几个常见的设计模式
+</pre>
+
+<pre>
+map/reduce过程，如何用map/reduce实现两个数据源的联合统计 
+</pre>
+
+<pre>
+什么是布隆过滤器，其实现原理是？ False positive指的是？
+</pre>
+
+<pre>
+如何解决缓存单机热点问题 
+</pre>
+
+<pre>
+如何实现一个Hashtable？你的设计如何考虑Hash冲突？如何优化？
+</pre>
+
+<pre>
+列举一个常用的Redis客户端的并发模型
+</pre>
+
+<pre>
+tcp协议（建连过程，慢启动，滑动窗口，七层模型）
+</pre>
+
+<pre>
+Socket交互的基本流程？
+</pre>
+
+<pre>
+Rest和Http什么关系？大家都说Rest很轻量，你对Rest风格如何理解？
+</pre>
+
+<pre>
+TCP建立 断开连接的过程
+</pre>
+
+<pre>
+如何从一张表中查出name字段不包含“XYZ”的所有行？ 
+</pre>
+
+<pre>
+如何优化数据库性能（索引、分库分表、批量操作、分页算法、升级硬盘SSD、业务优化、主从部署） 
+</pre>
+
+<pre>
+mybatis如何实现批量提交？
+</pre>
+
+<pre>
+如何查看Java应用的线程信息？
+</pre>
+
+<pre>
+Thread dump文件如何分析（Runnable，锁，代码栈，操作系统线程ID关联）
+</pre>
+
+<pre>
+ Java服务端问题排查（OOM，CPU高，Load高，类冲突） 
+</pre>
+
+<pre>
+发现磁盘空间不够，如何快速找出占用空间最大的文件？
+</pre>
+
+<pre>
+/etc/hosts文件什么做用？
+</pre>
+
+<pre>
+Linux Load过高的可能性有哪些？
+</pre>
+
+<pre>
+怎么看一个Java线程的资源耗用？
+</pre>
+
+<pre>
+Linux 硬链接和软链接的区别？
+</pre>
+
+<pre>
+上下文切换是什么含义
+</pre>
+
+<pre>
+Java里面的Threadlocal是怎样实现的？
+</pre>
+
+<pre>
+如何创建线程？如何保证线程安全？
+</pre>
+
+<pre>
+Java程序是否会内存溢出，内存泄露情况发生？举几个例子。
+</pre>
+
+<pre>
+如何查看JVM的内存使用情况？
+</pre>
+
+<pre>
+如何用Java分配一段连续的1G的内存空间？需要注意些什么？ 
+</pre>
+
+<pre>
+final/finally/finalize的区别？
+</pre>
+
+<pre>
+Java有自己的内存回收机制，但为什么还存在内存泄露的问题呢？ 
+</pre>
+
+<pre>
+什么是java序列化，如何实现java序列化?(写一个实例)？
+</pre>
+
+<pre>
+NIO模型，select/epoll的区别，多路复用的原理
+</pre>
+
+<pre>
+NIO是什么？适用于何种场景？
+</pre>
+
+<pre>
+常用的集合类有哪些？比如List如何排序？
+ArrayList和LinkedList内部的实现大致是怎样的？他们之间的区别和优缺点？
+</pre>
+
+<pre>
+接口与抽象类的区别？
+</pre>
+
+<pre>
+ 说一下几种常见的排序算法和分别的复杂度。 
+
+　　· 用Java写一个冒泡排序算法 
+
+　　· 描述一下链式存储结构。 
+
+　　· 如何遍历一棵二叉树？ 
+
+　　· 倒排一个LinkedList。 
+
+　　· 用Java写一个递归遍历目录下面的所有文件。
+</pre>
