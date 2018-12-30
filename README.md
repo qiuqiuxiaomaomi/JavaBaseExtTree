@@ -106,6 +106,9 @@ HashMap和Hashtable区别，原理
 字符编码：
       1、常用的字符编码
       2、如何解决中文乱码问题
+
+      java中的字符编码方式
+      https://www.cnblogs.com/liujinhong/p/5995946.html
 </pre>
 
 <pre>
@@ -128,10 +131,64 @@ HashMap和Hashtable区别，原理
 
 <pre>
 Tomcat的session处理，如果让你实现一个tomcatserver，如何实现session机制
+
+      sessionid是一个会话的key，浏览器第一次访问服务器会在服务器端生成一个session，有一个
+      sessionid与它对应。tomcat生成的sessionid叫做jsessionid.
+
+      session在访问tomcat服务器HttpRequestRequest的getSession()的时候创建，tomcat
+      的ManagerBase类提供了创建sessionid的方法: 随机数 + 时间 + jvmid.
+
+      存储在服务器的内存中，tomcat的StandardManager类将session存储在内存中，也可以持\久
+      化到file，数据库，memcache，redis等。客户端只保存sessionid到cookie中，而不会保
+      存session，session销毁只能通过invalidate或超时，关掉浏览器并不会关闭session。
+
+      那么Session在何时创建呢？当然还是在服务器端程序运行的过程中创建的，不同语言实现的应
+      用程序有不同创建Session的方法，而在Java中是通过调用HttpServletRequest的getSession
+      方法（使用true作为参数）创建的。在创建了Session的同时，服务器会为该Session生成唯一
+      的Session id，而这个Session id在随后的请求中会被用来重新获得已经创建的Session；
+      在Session被创建之后，就可以调用Session相关的方法往Session中增加内容了，而这些内容
+      只会保存在服务器中，发到客户端的只有Session id；当客户端再次发送请求的时候，会将这
+      个Session id带上，服务器接受到请求之后就会依据Session id找到相应的Session，从而再
+      次使用之。
+
+      ManagerBase是所有session管理工具类的基类，它是一个抽象类，所有具体实现session管理
+      功能的类都要继承这个类，该类有一个受保护的方法，该方法就是创建sessionId值的方法：
+     （tomcat的session的id值生成的机制是一个随机数加时间加上jvm的id值，jvm的id值会根据
+      服务器的硬件信息计算得来，因此不同jvm的id值都是唯一的），StandardManager类是tomcat
+      容器里默认的session管理实现类，它会将session的信息存储到web容器所在服务器的内存里。
+      PersistentManagerBase也是继承ManagerBase类，它是所有持久化存储session信息的基类，
+      PersistentManager继承了PersistentManagerBase，但是这个类只是多了一个静态变量和一个
+      getName方法，目前看来意义不大，对于持久化存储session，tomcat还提供了StoreBase的抽象
+      类，它是所有持久化存储session的基类，另外tomcat还给出了文件存储FileStore和数据存储
+      JDBCStore两个实现。
 </pre>
 
 <pre>
 反射讲一讲，主要是概念,都在哪需要反射机制，反射的性能，如何优化
+
+    反射使用的领域
+       1）Java编码时知道类和对象的具体信息，此时直接对类和对象进行操作即可，无需反射
+       2）如果编码时不知道类或者对象的具体信息，此时应该使用反射来实现
+
+       具体：
+           1）比如类的名称放在XML文件中，属性和属性值放在XML文件中，需要在运行时读取XML文件，
+              动态获取类的信息
+           2）在编译时根本无法知道该对象或类可能属于哪些类，程序只依靠运行时信息来发现该对象和
+              类的真实信息
+
+       反射技术优缺点
+           优点：
+              1）反射提高了Java程序的灵活性和扩展性，降低耦合性，提高自适应能力。它允许程序创
+                 建和控制任何类的对象，无需提高硬编码目标类
+              2）反射是其他一些常用语言，如C、C++、Fortran或者Pascal等不具备的
+              3）Java反射技术应用领域很广，如软件测试、JavaBean等
+              5）许多流行的开源框架例如Struts、Hibernate、Spring在实现过程中都采用了该技术
+           缺点：
+              1）性能问题：使用反射基本上是一种解释操作，用于字段和方法接入时要远慢于直接代码。
+                因此Java反射机制只要应用在对；灵活性和扩展性要求很高的系统框架上，普通程序不
+                建议使用
+              2）使用反射会模糊程序内部逻辑：程序员希望在代码中看到程序的逻辑，反射等绕过了源
+                 代码的技术，因而会带来维护问题。反射代码比相应的直接代码更复杂
 </pre>
 
 <pre>
@@ -303,4 +360,20 @@ ArrayList和LinkedList内部的实现大致是怎样的？他们之间的区别�
 　　· 倒排一个LinkedList。 
 
 　　· 用Java写一个递归遍历目录下面的所有文件。
+</pre>
+
+<pre>
+自动装箱与拆箱
+</pre>
+
+<pre>
+hashCode和equals方法的关系
+</pre>
+
+<pre>
+String和StringBuffer、StringBuilder的区别
+</pre>
+
+<pre>
+面向对象和面向过程的区别
 </pre>
