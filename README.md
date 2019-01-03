@@ -84,6 +84,12 @@ HashMap和Hashtable区别，原理
           方法移除元素则不会抛出ConcurrentModificationException异常。但这并不是一个一定
           发生的行为，要看JVM。这条同样也是Enumeration和Iterator的区别。fail-fast机制如
           果不理解原理，可以查看这篇文章：http://www.cnblogs.com/alexlo/archive/2013/03/14/2959233.html
+	  
+	  我们知道java.util.HashMap不是线程安全的，因此如果在使用迭代器的过程中有其他线程修改了map，那么将抛出
+	  ConcurrentModificationException，这就是所谓fail-fast策略。
+
+          这一策略在源码中的实现是通过modCount域，modCount顾名思义就是修改次数，对HashMap内容的修改都将增加这个值，
+	  那么在迭代器初始化过程中会将这个值赋给迭代器的expectedModCount。
 
           5.由于HashMap非线程安全，在只有一个线程访问的情况下，效率要高于HashTable。
 
