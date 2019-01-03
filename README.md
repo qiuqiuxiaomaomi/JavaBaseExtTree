@@ -812,3 +812,15 @@ public @interface Authority {
              @Inherited 标记,然后用定义的注解来标注另一个父类, 父类又有一个子类(subclass),则父类的所
              有属性将被继承到它的子类中.
 </pre>
+
+![](https://i.imgur.com/VESJqh3.png)
+
+<pre>
+Spring aop vs aspectJ
+
+      AspectJ是静态代理的增强，所谓的静态代理就是AOP框架会在编译阶段生成AOP代理类，因此也称为编译时增强
+
+      使用Spring AOP与AspectJ的静态代理不同，Spring AOP使用的动态代理，所谓的动态代理就是说AOP框架不会
+      去修改字节码，而是在内存中临时为方法生成一个AOP对象，这个AOP对象包含了目标对象的全部方法，并且在特定
+      的切点做了增强处理，并回调原对象的方法
+</pre>
