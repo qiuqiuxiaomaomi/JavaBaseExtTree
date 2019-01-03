@@ -752,6 +752,8 @@ String和StringBuffer、StringBuilder的区别：
           缺点：性能比面向过程低
 </pre>
 
+![](https://i.imgur.com/CkWqKkK.jpg)
+
 <pre>
 嵌套for循环的优化准则：
 
