@@ -1187,6 +1187,8 @@ InnoDB VS MyIsam
            引和主索引没有多大区别。
 </pre>
 
+![](https://i.imgur.com/utrFnwk.png)
+
 <pre>
 分布式缓存：
 
@@ -1196,4 +1198,5 @@ InnoDB VS MyIsam
      JGroup + Evcache
      Gemfire(12306购票网站)
      Ignite
+     Hazelcast
 </pre>
