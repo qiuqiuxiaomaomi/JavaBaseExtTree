@@ -913,3 +913,115 @@ Servlet的生命周期
 当tomcat启动或重载时将会session对象保存到指定文件中。2）PersistentManager，管理方式更加灵活，具有容错能
 力，可以及时把Session备份到Session Store中，可以控制内存中Session的数量。
 </pre>
+
+
+<pre>
+Object的通用方法
+
+通用方法有equals(), finalize(), toString(), 其他native方法有hashcode(), 
+registerNatives(), getClass(), clone(), notify(), notifyAll(), wait()等。
+</pre>
+
+<pre>
+Collection有哪些类
+
+      Set, 
+         HashSet, 
+         TreeSet,
+      List, 
+         ArrayList, 
+         LinkedList, 
+         Vector,
+         Arrays,
+      SortedSet, 
+      Map,
+         SortedMap,   
+      Collections,  
+      AbstractCollection
+</pre>
+
+<pre>
+jdbc的操作过程
+
+      加载数据库驱动包、
+      连接数据库、
+      使用sql语句操作数据库、
+      关闭数据库连接
+</pre>
+
+<pre>
+介绍threadlocal
+
+      可以叫做线程本地变量或线程本地存储。ThreadLocal为变量在每个线程中都创建了一个副本，每个线程都可以访
+      问自己内部的副本变量。但可能这样做会导致内存占用较大。
+
+      ThreadLocal类的几个方法：
+            get() 用来获取ThreadLocal在当前线程中保存的变量副本，
+            set()用来设置当前线程中变量的副本，
+            remove()用来一冲当前线程中的变量副本，
+            initialValue()一般用来在使用时进行重写，是一个延迟加载方法。
+
+      应用场景：
+          最常见的ThreadLocal使用场景是用来解决数据库连接、Session管理等。
+</pre>
+
+<pre>
+线程之间的通信:
+
+      主要包括互斥锁、条件变量、读写锁和线程信号灯。
+
+          互斥锁：
+                以排他方式防止数据被并发修改，互斥锁两个状态0和1，具体为申请锁，占用锁以防止数据被修改，
+              此时默认为阻塞等等，最后释放锁。
+
+          条件变量通信机制：
+                原理：条件变量出现是，可以弥补互斥锁的缺陷，有些问题仅仅依靠互斥锁无法解决，但条件变量
+              不能单独使用，必须配合互斥锁一起实现对象资源的互斥访问。
+
+          读写锁：
+                在对数据读写时，往往读占据主要部分，基本原则是如果其他线程读数据，则允许其他线程执行读
+              操作，但不允许写操作，如果有其他线程申请写操作，则其他线程不能申请读操作和写操作。
+
+          线程信号：
+                线程拥有与信号相关的私有数据---线程信号掩码，线程可以向别的线程发送信号，每个线程可以设置
+              自己的阻塞集合，所有线程中，同一信号任何线程对该线程的处理相同。
+</pre>
+
+<pre>
+Jdk的并发工具包介绍
+
+      Map并发包：
+               其实现为ConcurrentHashMap，它实现了ConcurrentMap接口，put方法为根据计算出的hash值去
+          获取segment对象，找到segment对象后调用该对象的put方法完成操作。segment中的put方法则是先加锁，
+          然后判断数组大小，判断是否需要扩充，得到key所要存放的位置。
+
+      List并发包：
+               在高并发环境中使用CopyOnWriteArrayList代替ArrayList，添加元素是利用数组的copy功能和
+          加锁机制，并发情况下，CopyOnWriteArrayList比ArrayList略快了一些。
+
+      Set并发包
+               CopyOnWriteSet和CopyOnWriteList底层实现差不多，只是会在添加元素时进行唯一性判断，如果
+          对象数组中已经含有重复的元素，则不进行增加处理。
+
+      Queue并发
+               ArrayBlockingQueue，底层为数组，并对关键的方法入队，出队操作添加了锁机制。
+
+      Atomic系列类
+               比如AtomicInteger类，通过使用计数器操作时，一般为了避免线程安全问题，在方法上加锁操作，
+          有了并发包就可以直接使用。
+</pre>
+
+<pre>
+垃圾回收算法使用的产品、场景
+
+      标记-清除算法：标记阶段，确定所有要回收的对象，并标记，清除阶段则将需要回收的对象清除。
+
+      复制算法：把内存分为大小相等的两块，每次使用其中的一块，当垃圾回收时，把存活的对象复制到另一块上，
+               然后把这块内存整个清理掉。两块内存比是8：1
+
+      标记整理算法：把存活的对象往内存的一端移动，然后直接回收边界以外的内存。标记-整理算法提高了内存的利
+                  用率，并且它适合在收集对象存活时间较长的老年代。
+
+      分代回收算法：根据对象的存活时间把内存分为新生代和老年代，根据各代对象的存活特点，每代采用不同的GC
+                  算法。新生代用标记-复制算法，老年代用标记-整理算法。
+</pre>
