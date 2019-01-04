@@ -1186,3 +1186,14 @@ InnoDB VS MyIsam
            二是辅助索引的区别：InnoDB的辅助索引data域存储相应记录主键的值而不是地址。而MyISAM的辅助索
            引和主索引没有多大区别。
 </pre>
+
+<pre>
+分布式缓存：
+
+     Redis
+     Memcached
+     CouchBase
+     JGroup + Evcache
+     Gemfire(12306购票网站)
+     Ignite
+</pre>
