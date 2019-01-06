@@ -1200,3 +1200,21 @@ InnoDB VS MyIsam
      Ignite
      Hazelcast
 </pre>
+
+<pre>
+          对于频繁抛出的异常，JDK为了性能会做一个优化，在JIT重新编译后抛出没有堆栈的异常，在使用server
+      模式的时候，这个优化是开启的。
+
+          一个解决办法是暂时禁用这个优化，强制要求每次都要抛出有堆栈的异常。幸好JDK提供了选项来关闭这个优
+      化，配置JVM参数:
+                   -XX:-OmitStackTraceInFastThrow 就可以禁止这个优化（注意选项中的减号，加号是启用）
+
+      -Xmx512m -XX:CompileThreshold=10000 设置堆最大为512M，设置当一个方法被调用1万次的时候就被JIT编译
+
+      总结下本文找bug经历想表达的几点想法：
+         （1）正确地打印错误日志
+         （2）在server模式下，最好都设置-XX:-OmitStackTraceInFastThrow
+         （3）使用类或者方法的时候，最好能详细阅读下javadoc，很多问题都能找到答案
+         （4）使用SimpleDateFormat的时候要注意线程安全性，要么每次new，要么做同步，两者的性能有差距，
+              但是这个差距很难成为你的性能瓶颈
+</pre>
