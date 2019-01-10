@@ -1218,3 +1218,85 @@ InnoDB VS MyIsam
          （4）使用SimpleDateFormat的时候要注意线程安全性，要么每次new，要么做同步，两者的性能有差距，
               但是这个差距很难成为你的性能瓶颈
 </pre>
+
+<pre>
+     实时队列采用双队列模式，生产者将行为记录写入Queue1，worker服务从Queue1消费新鲜数据，如果异常则写入
+     Queue2（主要保存异常数据），RetryWorker会监听Queue2，消费异常数据，如果还未处理成功按照一定的策略
+     等待或者将异常数据再写入Queue2，如果数据发生积压可以调整worker的消费游标，从最新数据重新开始消费，保
+     证了最新data得到处理，中间未处理的一段则可以启动backupWorker指定起止游标在消费完指定区间的数据后，
+     backupWorker会自动停止。
+
+     DB降级开关后，可直接写入redis（storm），同时将数据写入一份到Retry队列，在开启DB降级开关后消费Retry
+     队列中的数据，从而把数据写入到mysql中，达到最终一致性。MYSQL切分为分片为2的N次方，例如原来分为两个库
+     d0和d1均放在s0服务器上，s0同时有备机s1，扩容只要几步骤：确保s0到s1服务器同步顺利，没有明显延迟；s0
+     暂时关闭读写权限；确保s1已经完全同步到s0更新；s1开放读写权限；d1的dns由s0切换到s1；s0开放读写权限。
+</pre>
+
+<pre>
+DB的特性和隔离级别
+
+4大特性：原子性，一致性，分离性，持久性
+
+隔离级别：
+
+读提交：写事务禁止读
+
+读未提交：写事务允许读
+
+可重复读：写事务禁止读事务，读禁止写
+
+序列化：全部禁止
+
+详细说明：读提交1个事务开始写则全部禁止其他事务访问该行。读未提交1个事务开始写则不允许其他事务同时写，但可以
+读。可重复读 读事务会禁止写事务，写事物则禁止其他任何事务。序列化性能最低，全部禁止，串行执行。 MYSQL默认的
+是可重复读。
+</pre>
+
+<pre>
+多线程同步锁
+
+A，RentrantLock，可重入的互斥锁，可中断可限时，公平锁，必须在finally释放锁，而synchronize由JVM释放。
+可重入但是要重复退出，普通的lock()不能响应中断，lock.lockInterruptbly()可响应中断，可以限时tryLock()，
+超时返回false，不会永久等待构成死锁。
+
+B，Condition条件变量，signal唤醒其中1个在等待的线程，signalall唤醒所有在等待的线程await()等待并释放锁，
+与lock结合使用。
+
+C，semaphore信号量，多个线程比（额度=10）进入临界区，其他则阻塞在临界区外。
+
+D，ReadWriteLock，读读不互斥，读写互斥，写写互斥。
+
+E，CountDownLantch倒数计时器，countdown()和await()
+
+F，CyCliBarrier
+
+G，LockSupport，方法park和unpark
+</pre>
+
+<pre>
+说一下内存泄露
+
+A，HashMap,vector等容易（静态集合类）， 和应用程序生命周期一样，所引用的所有对象Object也不能释放。
+
+B，当集合类里面的对象属性被修改后，再调用remove()不起作用，hashcode值发生了改变
+
+C，其对象add监听器，但是往往释放对象时忘记去删除这些监听器
+
+D，各种连接记得关闭
+
+E，内部类的引用
+
+F，调用其他模块，对象作用参数
+
+G，单例模式，持有外部对象引用无法收回。
+</pre>
+
+<pre>
+如何将数据分布在redis第几个库？
+
+答：redis 本身支持16个数据库，通过 数据库id 设置，默认为0。
+   例如jedis客户端设置。一：JedisPool(org.apache.commons.pool.impl.GenericObjectPool.Config 
+   poolConfig, String host, int port, int timeout, String password, int database);
+   第一种通过指定构造函数database字段选择库，不设置则默认0库。二：jedis.select(index);调用jedis的
+   select方法指定。
+</pre>
